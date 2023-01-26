@@ -1,6 +1,6 @@
 "PIZZARIA GO-IT"
 Nesse projeto utilizamos programação orientada a objetos em Python e com conexão ao MySQL para importar seu banco de dados e automatizar o sistema de uma Pizzaria.
-
+🍕   🍕    🍕
 Criamos no MySQL o Banco de Dados de uma pizzaria "Pizzariagoit1" com algumas informações como menu, cardapio e usuarios
 No Python usamos um conector para importar os dados (usamos o mysql.connector)
 Importamos todas as tabelas para começar as conexões 
