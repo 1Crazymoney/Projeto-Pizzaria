@@ -9,12 +9,10 @@ import os
 today = date.today()
 print("Today's date:", today)
 
-
 def pizzaria():
     print('================================================================')
     print('             ##     PIZZARIA GO-IT    ##')
     print('================================================================')
-
 
 def menu():
     print('''
@@ -26,7 +24,6 @@ def menu():
                [4] - Desligar
 
              ===================================''')
-
 
 pizzaria()
 menu()
@@ -40,9 +37,9 @@ if (n1 == '1'):
         os.system('cls')
         pizzaria()
 
-        inputNomeUsuario = input('QUAL E SEU LOGIN--> ')
+        inputNomeUsuario = input('Digite seu login: ')
 
-        inputSenha = input('QUAL É SUA SENHA --> ')
+        inputSenha = input('Digite sua senha: ')
 
         cnx = mysql.connector.connect(
             host='localhost', database='pizzariagoit1', user='root', password='root')
@@ -72,18 +69,14 @@ if (n1 == '1'):
         if inputSenha == usuario.senha:
             print("logado com sucesso !")
 
-            cnx = mysql.connector.connect(
-                host='localhost', database='pizzariagoit1', user='root', password='root')
+            cnx = mysql.connector.connect(host='localhost', database='pizzariagoit1', user='root', password='root')
             cursor = cnx.cursor()
             cursor.execute("SELECT * FROM tb_pizza")
 
             queryResult = cursor.fetchall()
-
             cursor.close()
             cnx.close()
-
             print(queryResult)
-
             pizzas = []
 
             for i in queryResult:
@@ -96,27 +89,20 @@ if (n1 == '1'):
                 print(f'{pizza.id}        {pizza.nome}                {pizza.preco}')
                 print('------------------------------------------------------')
 
-            cnx = mysql.connector.connect(
-                host='localhost', database='pizzariagoit1', user='root', password='root')
+            cnx = mysql.connector.connect(host='localhost', database='pizzariagoit1', user='root', password='root')
             cursor = cnx.cursor()
 
             idPizzaSelecionada = input("Digite o numero pizza: ")
-
             cursor.execute("SELECT * FROM tb_bebidas")
-
             queryResult = cursor.fetchall()
-
             cursor.close()
             cnx.close()
-
             bebidas = []
 
             for i in queryResult:
                 bebidas.append(Bebidas(i[0], i[1], i[2]))
-
             os.system('cls')
             pizzaria()
-
             for bebida in bebidas:
                 print(
                     f'{bebida.id}        {bebida.nome}                {bebida.preco}')
@@ -127,25 +113,21 @@ if (n1 == '1'):
             cnx = mysql.connector.connect(
                 host='localhost', database='pizzariagoit1', user='root', password='root')
             cursor = cnx.cursor()
-
             nomeCliente = input('qual e o nome do cliente: ')
             dataPedido = date.today()
 
             add_venda = (
                 f'INSERT INTO tb_vendas(id_pizza, totalpagar, nomecliente, id_bebidas, datavenda ) VALUES("{pizzas[int(idPizzaSelecionada) - 1].id}", {pizzas[int(idPizzaSelecionada) - 1].preco + bebidas[int(idBebidaSelecionada)-1].preco}, "{nomeCliente}",{bebidas[int(idBebidaSelecionada)-1].id}, now())')
 
-            vendaOk = input('venda ok.. [enter]')
-
+            vendaOk = input('Venda finalizada com sucesso! [enter]')
             cursor.execute(add_venda)
             cnx.commit()
-
             cursor.close()
             cnx.close()
 
-            continuarVenda = input(' Continuar vendendo [s]sim ou [n]não ?')
+            continuarVenda = input(' Continuar em vendas? [s]sim ou [n]não ?')
             if continuarVenda == 'n':
                 break
-
         else:
             erroSenha = input("** Senha incorreta **  [enter]")
             print('--------------------------------------------')
@@ -155,29 +137,19 @@ if (n1 == '1'):
                 f'Maximo de erro 3X usuario {cont01}X é senha {cont02}X [enter]')
             if cont02 == 3:
                 break
-
-
 if (n1 == '2'):
     os.system('cls')
     pizzaria()
 
-    conexao = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="",
-        database="pizzariagoit1"
-    )
+    conexao = mysql.connector.connect(host="localhost",user="root",password="",database="pizzariagoit1")
     cursor = conexao.cursor()
 
-    funcao = input('Qual é a função: ')
-    login_usuario = input('Qual é o nome do usuario: ')
-    senha_usuario = input('Qual é a senha: ')
-
+    funcao = input('Digite a função: ')
+    login_usuario = input('Digite o usuario: ')
+    senha_usuario = input('Digite a senha: ')
     comando = f'INSERT INTO tb_usuarios (funcao, login_usuario, senha_usuario) VALUES ("{funcao}", "{login_usuario}", "{senha_usuario}")'
-
     cursor.execute(comando)
     conexao.commit()
-
     cursor.close()
     conexao.close()
 
@@ -185,27 +157,18 @@ if (n1 == '2'):
 elif (n1 == '3'):
     os.system('cls')
     pizzaria()
-    conexao = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="root",
-        database="pizzariagoit1"
-    )
+    conexao = mysql.connector.connect(host="localhost",user="root",password="root",database="pizzariagoit1")
     cursor = conexao.cursor()
 
     comando = f'SELECT * FROM tb_vendas'
     cursor.execute(comando)
     resultado = cursor.fetchall()
-
     vendas = []
 
     for i in resultado:
         vendas.append(Vendas(i[0], i[1], i[2],i[3], i[4], i[5]))
-
-
     cursor.close()
     conexao.close()
-    
     os.system('cls')
 
     print('id venda      | id bebida     | id pizza     | valor     | clinte      | data     ')
